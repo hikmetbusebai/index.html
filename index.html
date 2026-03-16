@@ -3,9 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Romantik Doğum Günü</title>
+<title>Meleğimin Doğum Günü</title>
 
 <style>
+
 body{
 margin:0;
 padding:0;
@@ -19,7 +20,6 @@ align-items:center;
 min-height:100vh;
 }
 
-/* Arka plan kalpler */
 .bg-heart{
 position:absolute;
 font-size:22px;
@@ -33,7 +33,6 @@ opacity:0.7;
 100%{ transform:translateY(-10vh) scale(1.2); opacity:0;}
 }
 
-/* Mektup */
 .envelope{
 width:320px;
 height:220px;
@@ -94,12 +93,12 @@ margin:20px 0;
 video{
 display:none;
 width:350px;
+max-width:90vw;
 border-radius:20px;
 box-shadow:0 10px 30px rgba(0,0,0,0.4);
 margin:10px 0;
 }
 
-/* Konfeti */
 .confetti{
 position:absolute;
 font-size:22px;
@@ -111,34 +110,28 @@ animation: explode 1.5s ease-out forwards;
 100%{ transform:translate(var(--x),var(--y)) rotate(720deg); opacity:0;}
 }
 
-/* GALERİ */
-.gallery{
+.bottom-text{
 display:none;
-gap:15px;
-overflow-x:auto;
-margin-top:20px;
+width:100%;
+text-align:center;
+font-size:24px;
+color:white;
+margin-top:40px;
+margin-bottom:30px;
+font-weight:bold;
+text-shadow:0 0 10px #fff,0 0 20px #ff69b4,0 0 30px #ff1493;
+animation: glow 2s ease-in-out infinite alternate;
 }
 
-.gallery img{
-width:200px;
-border-radius:15px;
-box-shadow:0 10px 20px rgba(0,0,0,0.3);
+@keyframes glow{
+from{
+text-shadow:0 0 10px #fff,0 0 20px #ff69b4,0 0 30px #ff1493;
+}
+to{
+text-shadow:0 0 20px #fff,0 0 30px #ff85c2,0 0 40px #ff1493;
+}
 }
 
-/* pasta */
-.cake{
-position:fixed;
-bottom:20px;
-right:20px;
-font-size:80px;
-animation: cakeBounce 2s infinite;
-}
-
-@keyframes cakeBounce{
-0%{transform:translateY(0)}
-50%{transform:translateY(-15px)}
-100%{transform:translateY(0)}
-}
 </style>
 </head>
 
@@ -158,20 +151,13 @@ animation: cakeBounce 2s infinite;
 <source src="altvideo.mp4" type="video/mp4">
 </video>
 
-<div class="gallery" id="gallery">
-<img src="foto1.jpg">
-<img src="foto2.jpg">
-<img src="foto3.jpg">
-</div>
-
-<div class="cake">🎂</div>
-
 <audio id="bgMusic" src="muzik.mp3"></audio>
 
 <script>
 
 let text="🌸✨️🧸\nDOĞUM GÜNÜN KUTLU OLSUN 🥳🥳\nİYİ Kİ DOĞDUN MELEĞİM🪽\n🧸✨️🌸";
 let i=0;
+let effectsStarted=false;
 
 function typeWriter(){
 if(i<text.length){
@@ -184,63 +170,31 @@ setTimeout(typeWriter,60);
 function openLetter(){
 
 let envelope=document.querySelector('.envelope');
+
 envelope.classList.add('open');
 
 setTimeout(()=>{
 envelope.classList.add('hide');
 document.getElementById('videoTop').style.display="block";
 document.getElementById('videoBottom').style.display="block";
-document.getElementById('gallery').style.display="flex";
 },800);
 
 document.querySelector('.click-text').style.display="none";
-document.getElementById('message').style.display="block";
 
-fadeMusic();
+document.getElementById('message').style.display="block";
+document.querySelector('.bottom-text').style.display="block";
+
+cake.style.display="block";
+
+document.getElementById("bgMusic").play().catch(()=>{});
+
 explodeConfetti();
 typeWriter();
 
-extraMessage();
+startEffects();
 
 }
 
-/* müzik fade */
-function fadeMusic(){
-let music=document.getElementById("bgMusic");
-music.volume=0;
-music.play().catch(()=>{});
-
-let vol=0;
-
-let fade=setInterval(()=>{
-if(vol<1){
-vol+=0.05;
-music.volume=vol;
-}else{
-clearInterval(fade);
-}
-},200);
-}
-
-/* sürpriz mesaj */
-function extraMessage(){
-
-setTimeout(()=>{
-let extra=document.createElement("div");
-
-extra.innerHTML="💖 hayatıma giren en güzel mucizesin 💖";
-
-extra.style.fontSize="26px";
-extra.style.color="white";
-extra.style.marginTop="20px";
-
-document.body.appendChild(extra);
-
-},10000);
-
-}
-
-/* konfeti */
 function explodeConfetti(){
 
 for(let i=0;i<60;i++){
@@ -268,27 +222,15 @@ setTimeout(()=>conf.remove(),1500);
 
 }
 
-/* tıklayınca kalp */
-document.addEventListener("click",(e)=>{
+/* efektleri başlat */
 
-let heart=document.createElement("div");
+function startEffects(){
 
-heart.innerHTML="❤️";
+if(effectsStarted) return;
 
-heart.style.position="absolute";
-heart.style.left=e.pageX+"px";
-heart.style.top=e.pageY+"px";
-heart.style.fontSize="30px";
+effectsStarted=true;
 
-heart.style.animation="explode 1s forwards";
-
-document.body.appendChild(heart);
-
-setTimeout(()=>heart.remove(),1000);
-
-});
-
-/* uçan kalpler */
+/* kalpler */
 
 for(let i=0;i<25;i++){
 
@@ -308,7 +250,7 @@ document.body.appendChild(heart);
 
 }
 
-/* çiçek */
+/* çiçekler */
 
 for(let i=0;i<20;i++){
 
@@ -328,27 +270,71 @@ document.body.appendChild(flower);
 
 }
 
-/* gül */
+/* kanatlar */
 
 for(let i=0;i<15;i++){
 
-let rose=document.createElement("div");
+let wing=document.createElement("div");
 
-rose.className="bg-heart";
+wing.className="bg-heart";
 
-rose.innerHTML="🌹";
+wing.innerHTML="🪽";
 
-rose.style.left=Math.random()*100+"vw";
+wing.style.left=Math.random()*100+"vw";
 
-rose.style.fontSize=(18+Math.random()*25)+"px";
+wing.style.fontSize=(18+Math.random()*25)+"px";
 
-rose.style.animationDuration=(9+Math.random()*6)+"s";
+wing.style.animationDuration=(8+Math.random()*6)+"s";
 
-document.body.appendChild(rose);
+document.body.appendChild(wing);
 
 }
 
+}
+
+/* pasta */
+
+let cake=document.createElement("div");
+
+cake.innerHTML="🎂";
+
+cake.style.fontSize="80px";
+cake.style.position="fixed";
+cake.style.bottom="20px";
+cake.style.right="20px";
+cake.style.zIndex="999";
+cake.style.cursor="pointer";
+cake.style.display="none";
+
+document.body.appendChild(cake);
+
+/* mum üfleme */
+
+cake.addEventListener("click",()=>{
+
+let blow=document.createElement("div");
+
+blow.innerHTML="💨";
+
+blow.style.position="fixed";
+blow.style.bottom="120px";
+blow.style.right="50px";
+blow.style.fontSize="40px";
+blow.style.animation="explode 1s forwards";
+
+document.body.appendChild(blow);
+
+explodeConfetti();
+
+setTimeout(()=>blow.remove(),1000);
+
+});
+
 </script>
+
+<div class="bottom-text">
+💖 hayatıma giren en güzel mucizesin 💖
+</div>
 
 </body>
 </html>
