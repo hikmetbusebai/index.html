@@ -195,6 +195,7 @@ startEffects();
 
 }
 
+/* konfeti */
 function explodeConfetti(){
 
 for(let i=0;i<60;i++){
@@ -222,82 +223,50 @@ setTimeout(()=>conf.remove(),1500);
 
 }
 
-/* efektleri başlat */
-
+/* tüm efektler mektup açıldıktan sonra başlar */
 function startEffects(){
 
 if(effectsStarted) return;
-
 effectsStarted=true;
 
 /* kalpler */
-
 for(let i=0;i<25;i++){
-
 let heart=document.createElement("div");
-
 heart.className="bg-heart";
-
 heart.innerHTML="💗";
-
 heart.style.left=Math.random()*100+"vw";
-
 heart.style.fontSize=(18+Math.random()*25)+"px";
-
 heart.style.animationDuration=(6+Math.random()*6)+"s";
-
 document.body.appendChild(heart);
-
 }
 
 /* çiçekler */
-
 for(let i=0;i<20;i++){
-
 let flower=document.createElement("div");
-
 flower.className="bg-heart";
-
 flower.innerHTML="🌸";
-
 flower.style.left=Math.random()*100+"vw";
-
 flower.style.fontSize=(18+Math.random()*25)+"px";
-
 flower.style.animationDuration=(8+Math.random()*6)+"s";
-
 document.body.appendChild(flower);
-
 }
 
 /* kanatlar */
-
 for(let i=0;i<15;i++){
-
 let wing=document.createElement("div");
-
 wing.className="bg-heart";
-
 wing.innerHTML="🪽";
-
 wing.style.left=Math.random()*100+"vw";
-
 wing.style.fontSize=(18+Math.random()*25)+"px";
-
 wing.style.animationDuration=(8+Math.random()*6)+"s";
-
 document.body.appendChild(wing);
-
 }
 
 }
 
 /* pasta */
-
 let cake=document.createElement("div");
-
 cake.innerHTML="🎂";
-
 cake.style.fontSize="80px";
 cake.style.position="fixed";
 cake.style.bottom="20px";
@@ -305,29 +274,34 @@ cake.style.right="20px";
 cake.style.zIndex="999";
 cake.style.cursor="pointer";
 cake.style.display="none";
-
 document.body.appendChild(cake);
 
 /* mum üfleme */
-
 cake.addEventListener("click",()=>{
-
 let blow=document.createElement("div");
-
 blow.innerHTML="💨";
-
 blow.style.position="fixed";
 blow.style.bottom="120px";
 blow.style.right="50px";
 blow.style.fontSize="40px";
 blow.style.animation="explode 1s forwards";
-
 document.body.appendChild(blow);
-
 explodeConfetti();
-
 setTimeout(()=>blow.remove(),1000);
+});
 
+/* dokununca kalp çıkması */
+document.addEventListener("click",(e)=>{
+if(!effectsStarted) return; // sadece mektup açıldıktan sonra
+let heart=document.createElement("div");
+heart.innerHTML="❤️";
+heart.style.position="absolute";
+heart.style.left=e.pageX+"px";
+heart.style.top=e.pageY+"px";
+heart.style.fontSize="30px";
+heart.style.animation="explode 1s forwards";
+document.body.appendChild(heart);
+setTimeout(()=>heart.remove(),1000);
 });
 
 </script>
